@@ -22,7 +22,7 @@ ExportedObj/
 *.booproj
 *.svd
 *.pdb
-
+*.vsconfig
 *.pidb.meta
 
 sysinfo.txt
