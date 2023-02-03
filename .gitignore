@@ -24,7 +24,7 @@ ExportedObj/
 *.pdb
 *.vsconfig
 *.pidb.meta
-
+Roots/UserSettings*
 sysinfo.txt
 
 *.apk
