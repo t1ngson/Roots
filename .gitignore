@@ -4,8 +4,8 @@
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
-Assets/AssetStoreTools*
-Assets/TextMesh Pro*
+Roots/Assets/AssetStoreTools*
+Roots/Assets/TextMesh Pro*
 
 /.vs/
 
