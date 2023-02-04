@@ -435,10 +435,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiles:
   - {fileID: 1434280549635666318, guid: 8b77d5d1ecd4b6645bb9bf26e29523a7, type: 3}
-  - {fileID: 1434280549635666318, guid: 8b77d5d1ecd4b6645bb9bf26e29523a7, type: 3}
-  - {fileID: 1434280549635666318, guid: 8b77d5d1ecd4b6645bb9bf26e29523a7, type: 3}
-  - {fileID: 1434280549635666318, guid: 8b77d5d1ecd4b6645bb9bf26e29523a7, type: 3}
   - {fileID: 1434280549635666318, guid: 95697809556f2ce46aee77f46223d51f, type: 3}
+  - {fileID: 1434280549635666318, guid: d351fc7195da6764db4aa7a05e76b312, type: 3}
+  tileWeights: 0a0000000500000002000000
   nutrient: {fileID: 3154614921209774362, guid: 749bedd02005ab24e90635cd897f2388, type: 3}
   water: {fileID: 4812419748601913348, guid: 8a9bf470b81c211499a89dcdcd80f1ed, type: 3}
   aheadDistance: 7
