@@ -152,7 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4900f6e07ca3df84f85b0dc29d56a442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterGathered: 0
+  nutrientGathered: 0
   nutrient: {fileID: 3154614921209774362, guid: 749bedd02005ab24e90635cd897f2388, type: 3}
+  water: {fileID: 4812419748601913348, guid: 8a9bf470b81c211499a89dcdcd80f1ed, type: 3}
 --- !u!4 &401829637
 Transform:
   m_ObjectHideFlags: 0
