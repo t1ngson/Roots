@@ -7,6 +7,8 @@ public class WorldGen : MonoBehaviour
 
     public GameObject nutrient;
 
+    private int count;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,8 +16,11 @@ public class WorldGen : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        Instantiate(nutrient, new Vector3(0, 0, 0), Quaternion.identity);
+        if (count++ == 20)
+        {
+            Instantiate(nutrient, new Vector3(0, 0, 0), Quaternion.identity);
+        }
     }
 }
