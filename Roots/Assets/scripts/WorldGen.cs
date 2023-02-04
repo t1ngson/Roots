@@ -91,17 +91,17 @@ public class WorldGen : MonoBehaviour
     GameObject getTileToGenerate()
     {
         int offset = Random.Range(0, totalWeights);
-        Debug.Log(offset);
+        //Debug.Log(offset);
         for (int i = 0; i < tileWeights.Length; i++)
         {
             if (offset < tileWeights[i])
             {
-                Debug.Log(i);
+                //Debug.Log(i);
                 return tiles[i];
             }
             offset -= tileWeights[i];
         }
-        Debug.Log(tiles.Length - 1);
+        //Debug.Log(tiles.Length - 1);
         return tiles[tiles.Length - 1];
     }
 

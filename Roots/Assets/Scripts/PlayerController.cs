@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameObject gameController;
+
     public float playerSpeed = 2f;
 
     private Camera playerCamera;
@@ -26,6 +28,8 @@ public class PlayerController : MonoBehaviour
         //leftBounds = -5f;
         //rightBounds = 5f;
         recalculateBounds();
+
+        gameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
@@ -86,5 +90,21 @@ public class PlayerController : MonoBehaviour
         rightCameraBounds = bound;
         leftBounds = -tileWidth / 2;
         rightBounds = tileWidth / 2;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(collision);
+        GameObject other = collision.gameObject;
+        if (other.CompareTag("Nutrient"))
+        {
+            gameController.GetComponent<LevelController>().nutrientCount++;
+            Destroy(other);
+        }
+        else if (other.CompareTag("Water"))
+        {
+            gameController.GetComponent<LevelController>().waterCount++;
+            Destroy(other);
+        }
     }
 }
