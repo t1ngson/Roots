@@ -29,13 +29,7 @@ public class WorldGen : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            player.transform.position -= new Vector3(0, playerSpeed * Time.deltaTime);
-        } else if (Input.GetKey(KeyCode.UpArrow))
-        {
-            player.transform.position += new Vector3(0, playerSpeed * Time.deltaTime);
-        }
+        
     }
 
     // Update is called once per frame
