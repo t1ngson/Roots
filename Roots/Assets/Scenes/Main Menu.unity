@@ -574,15 +574,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 956414822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2dbfcac7f9d28b47831e163c65d9b08, type: 3}
+  m_Script: {fileID: 11500000, guid: f1292da4e1bd4bc28b237e93ee69b55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adSource: {fileID: 956414825}
-  deathSound: {fileID: 0}
-  splash: {fileID: 0}
-  sparkle: {fileID: 0}
-  whack: {fileID: 0}
-  nom: {fileID: 0}
+  maxWaterCount: 0
+  timePerRun: 0
+  nutrientText: {fileID: 0}
+  waterText: {fileID: 0}
+  timePerWaterUse: 0
 --- !u!82 &956414825
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1524,8 +1523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671b956f483e5f6419ead277cfd83110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transition: {fileID: 0}
-  transitionTime: 1
 --- !u!1 &1571062051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1668,7 +1665,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 671b956f483e5f6419ead277cfd83110, type: 3}
+  m_Script: {fileID: 11500000, guid: 53d0363c134994aec971719cb02e9c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1591468439
