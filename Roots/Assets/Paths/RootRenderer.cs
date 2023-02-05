@@ -16,8 +16,9 @@ public class RootRenderer : MonoBehaviour {
     int pixelsPerScreenX;
     public bool autoUpdate;
 
-    void Start() {
+    void Awake() {
         creator = GetComponent<PathCreator>();
+        creator.CreatePath();
         path = creator.path;
     }
     // Update is called once per frame

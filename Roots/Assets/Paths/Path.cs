@@ -17,7 +17,6 @@ public class Path {
             centre + (Vector2.right + Vector2.down)*0.5f,
             centre + Vector2.right
         };
-        Debug.Log("points length initial: " + points.Count);
     }
 
 
