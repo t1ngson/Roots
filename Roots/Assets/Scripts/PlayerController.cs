@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Smooth Camera Following")]
     public float smoothSpeed = 0.1f;
+
+    [Header("Upgrade Sprites")]
+    public GameObject Drill;
+    public GameObject DDrill;
     
 
     // Start is called before the first frame update
@@ -70,6 +74,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        updatePlayerSprites();
         if (mouseControl)
             processMouseMovement();
         else
@@ -126,6 +131,11 @@ public class PlayerController : MonoBehaviour
         movement.z = 0f;
 
         transform.position += movement.normalized * playerSpeed * Time.deltaTime;
+
+        float AngleRad = Mathf.Atan2(movement.y, movement.x);
+        float AngleDeg = (180 / Mathf.PI) * AngleRad;
+
+        transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
     }
 
     void recalculateBounds()
@@ -183,5 +193,27 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 smoothFollow = Vector3.Lerp(playerCamera.transform.position, targetPos, smoothSpeed);
         playerCamera.transform.position = smoothFollow;
+    }
+
+    private void updatePlayerSprites()
+    {
+        switch (LevelController.getdrillUpgradeValue())
+        {
+            case 0:
+                Drill.SetActive(false);
+                DDrill.SetActive(false);
+                break;
+            case 1:
+                Drill.SetActive(true);
+                DDrill.SetActive(false);
+                break;
+            case 2:
+                Drill.SetActive(false);
+                DDrill.SetActive(true);
+                break;
+            default:
+                Debug.LogError("Drill upgrade invalid");
+                break;
+        }
     }
 }
