@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 posn;
 
     private float timeSinceLastNode = 0;
-    private float timeBetweenNodes = 0;
+    private float timeBetweenNodes = 1;
 
     Quaternion rot;
     
