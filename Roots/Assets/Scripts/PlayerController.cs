@@ -31,9 +31,14 @@ public class PlayerController : MonoBehaviour
         playerCamera = cameraObject.GetComponent<Camera>();
         //leftBounds = -5f;
         //rightBounds = 5f;
-        recalculateBounds();
+        //recalculateBounds();
 
         gameController = GameObject.FindGameObjectWithTag("GameController");
+        LevelController controller = gameController.GetComponent<LevelController>();
+        controller.speedUpgradeListener.AddListener(onSpeedUpgrade);
+        onSpeedUpgrade(controller.speedUpgradeLevel);
+        controller.visionUpgradeListener.AddListener(onVisionUpgrade);
+        onVisionUpgrade(controller.visionUpgradeLevel);
     }
 
     // Update is called once per frame
@@ -128,11 +133,23 @@ public class PlayerController : MonoBehaviour
         {
             gameController.GetComponent<LevelController>().waterCount++;
             Destroy(other);
+            gameController.GetComponent<LevelController>().upgradeVision();
         }
     }
 
     private void FixedUpdate()
     {
         Instantiate(trail, transform.position, transform.rotation);
+    }
+
+    public void onSpeedUpgrade(float newSpeed)
+    {
+        playerSpeed = newSpeed;
+    }
+
+    public void onVisionUpgrade(float newVision)
+    {
+        playerCamera.orthographicSize = newVision;
+        recalculateBounds();
     }
 }

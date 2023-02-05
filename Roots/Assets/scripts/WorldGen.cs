@@ -40,6 +40,8 @@ public class WorldGen : MonoBehaviour
         recalculateAheadDistance();
 
         totalWeights = tileWeights.Sum();
+
+        GetComponent<LevelController>().visionUpgradeListener.AddListener(onVisionUpgrade);
     }
 
     void Update()
@@ -121,5 +123,10 @@ public class WorldGen : MonoBehaviour
     {
         int vertExtent = (int)GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().orthographicSize;
         aheadDistance = vertExtent + 2;
+    }
+
+    void onVisionUpgrade(float newVision)
+    {
+        aheadDistance = (int)newVision + 2;
     }
 }
