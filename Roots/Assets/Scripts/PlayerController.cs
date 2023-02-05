@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         }
         maxDepth = -maxDepth;
 
-        smoothSpeed = ( 10 *0.5f+1) - (LevelController.getVisionUpgradeValue()) / 100;
+        smoothSpeed = ( (11 *0.5f)+1 - LevelController.getVisionUpgradeValue()) / 100;
     }
 
     // Update is called once per frame

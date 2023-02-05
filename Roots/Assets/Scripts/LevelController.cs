@@ -18,7 +18,7 @@ public class LevelController : MonoBehaviour
     public static int rainUpgradeLevel;
     public static int waterTankLevel;
     public static int drillUpgradeLevel;
-    public static int wateringCan;
+    public static int wateringCanLevel;
 
     [Header("Upgrade Listeners")]
     //public UnityEvent<float> speedUpgradeListener;
@@ -32,12 +32,12 @@ public class LevelController : MonoBehaviour
         if (!initialised)
         {
             // initialise Values
-            speedUpgradeLevel = 1;
-            visionUpgradeLevel = 10;
+            speedUpgradeLevel = 0;
+            visionUpgradeLevel = 0;
             rainUpgradeLevel = 0;
             waterTankLevel = 0;
             drillUpgradeLevel = 0;
-            wateringCan = 0;
+            wateringCanLevel = 0;
             initialised = true;
         }
     }
@@ -103,6 +103,15 @@ public class LevelController : MonoBehaviour
         return true;
     }
 
+    public static bool upgradeWateringCan()
+    {
+        if (wateringCanLevel == 10)
+            return false;
+        wateringCanLevel += 1;
+        //drillUpgradeLevel = Mathf.Min(drillUpgradeLevel, 2);
+        return true;
+    }
+
     public static float getSpeedUpgradeValue()
     {
         return speedUpgradeLevel * 0.5f + 1;
@@ -126,5 +135,10 @@ public class LevelController : MonoBehaviour
     public static int getdrillUpgradeValue()
     {
         return drillUpgradeLevel;
+    }
+
+    public static bool getWateringCanFull()
+    {
+        return wateringCanLevel == 10;
     }
 }
