@@ -27,7 +27,7 @@ public class RootRenderer : MonoBehaviour {
     }
 
     public Color GetColor(float distFromCurve) {
-        return Color.Lerp(Color.black, Color.white, distFromCurve);
+        return Color.Lerp(Color.black, Color.clear, distFromCurve);
     }    
 
     public int approximateClosest(Vector2[] points, Vector2 point, int? previousMatch) {
