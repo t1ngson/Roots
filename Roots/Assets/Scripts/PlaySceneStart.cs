@@ -7,6 +7,7 @@ public class PlaySceneStart : MonoBehaviour
 {
     public Animator transition;
     public float transitionTime = 1f;
+
     public void PlayButton()
     {
         LoadNextScene("GameScene");
@@ -40,4 +41,5 @@ public class PlaySceneStart : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
     }
+   
 }

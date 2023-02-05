@@ -13,6 +13,9 @@ public class Timer : MonoBehaviour
     {
         timeValue = GameObject.FindGameObjectWithTag("GameController").GetComponent<LevelController>().timePerRun;
     }
+    public float deathTransitionTime = 3f;
+
+    public Animator deathTransition;
 
     void Update()
     {
@@ -23,7 +26,7 @@ public class Timer : MonoBehaviour
         else
         {
             timeValue = 0;
-            //SceneManager.LoadScene("End Scene");
+            LoadShopSceneDeath();
         }
         DisplayTime(timeValue);
     }
@@ -39,4 +42,18 @@ public class Timer : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
+    public void LoadShopSceneDeath()
+    {
+        StartCoroutine(LoadDeathAnim());
+    }
+
+    IEnumerator LoadDeathAnim(){
+        deathTransition.SetTrigger("StartDeath");
+        yield return new WaitForSeconds(deathTransitionTime);
+        SceneManager.LoadScene("Shop Scene");
+    }
+
+
+
 }
