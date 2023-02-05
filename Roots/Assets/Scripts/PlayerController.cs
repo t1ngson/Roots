@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameObject gameController;
+
     public float playerSpeed = 2f;
 
-    private GameObject playerCamera;
+    private Camera playerCamera;
 
     private float leftBounds;
     private float rightBounds;
 
+    private float leftCameraBounds;
+    private float rightCameraBounds;
+
+    private Vector2 resolution;
+
     // Start is called before the first frame update
     void Start()
     {
-        playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        resolution = new Vector2(Screen.width, Screen.height);
+        GameObject cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
         //Debug.Log(playerCamera);
-        leftBounds  = -5f;
-        rightBounds =  5f;
+        playerCamera = cameraObject.GetComponent<Camera>();
+        //leftBounds = -5f;
+        //rightBounds = 5f;
+        recalculateBounds();
+
+        gameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
@@ -27,9 +39,15 @@ public class PlayerController : MonoBehaviour
 
         // Make camera follow player
         playerCamera.transform.position =
-            new Vector3(Mathf.Clamp(transform.position.x, leftBounds, rightBounds),
+            new Vector3(Mathf.Clamp(transform.position.x, leftCameraBounds, rightCameraBounds),
             transform.position.y,
             -10f);
+        
+        if ((resolution.x != Screen.width || resolution.y != Screen.height))
+        {
+            resolution = new Vector2(Screen.width, Screen.height);
+            recalculateBounds();
+        }
     }
 
     // Temporary movement algorithm for testing
@@ -55,5 +73,38 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position += movement.normalized * playerSpeed * Time.deltaTime;
+
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, leftBounds, rightBounds),
+            transform.position.y,
+            0);
+    }
+
+    void recalculateBounds()
+    {
+        float vertExtent = playerCamera.orthographicSize;
+        float horzExtent = vertExtent * Screen.width / Screen.height;
+        int tileWidth = GameObject.FindGameObjectWithTag("GameController").GetComponent<WorldGen>().tileWidth;
+        float bound = Mathf.Max(tileWidth / 2 - horzExtent, 0f);
+        leftCameraBounds = -bound;
+        rightCameraBounds = bound;
+        leftBounds = -tileWidth / 2;
+        rightBounds = tileWidth / 2;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(collision);
+        GameObject other = collision.gameObject;
+        if (other.CompareTag("Nutrient"))
+        {
+            gameController.GetComponent<LevelController>().nutrientCount++;
+            Destroy(other);
+        }
+        else if (other.CompareTag("Water"))
+        {
+            gameController.GetComponent<LevelController>().waterCount++;
+            Destroy(other);
+        }
     }
 }

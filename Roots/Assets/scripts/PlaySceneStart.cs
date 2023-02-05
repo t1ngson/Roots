@@ -7,6 +7,6 @@ public class PlaySceneStart : MonoBehaviour
 {
     public void PlayButton()
     {
-        SceneManager.LoadScene("temp");
+        SceneManager.LoadScene("GameScene");
     }
 }
