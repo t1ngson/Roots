@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 resolution;
 
+    [Header("Smooth Camera Following")]
+    public float smoothSpeed = 0.1f;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,17 +79,15 @@ public class PlayerController : MonoBehaviour
             transform.position.z
             );
 
-        // Make camera follow player
-        playerCamera.transform.position =
-            new Vector3(Mathf.Clamp(transform.position.x, leftCameraBounds, rightCameraBounds),
-            transform.position.y,
-            -10f);
+        
         
         if ((resolution.x != Screen.width || resolution.y != Screen.height))
         {
             resolution = new Vector2(Screen.width, Screen.height);
             recalculateBounds();
         }
+
+        Instantiate(trail, transform.position, transform.rotation);
     }
 
     // Temporary movement algorithm for testing
@@ -154,9 +156,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
-        Instantiate(trail, transform.position, transform.rotation);
+        // Make camera follow player
+        Vector3 newCameraPosition =
+            new Vector3(Mathf.Clamp(transform.position.x, leftCameraBounds, rightCameraBounds),
+            transform.position.y,
+            -10f);
+        SmoothFollow(newCameraPosition);
     }
 
     public void setSpeedUpgrade(float newSpeed)
@@ -168,5 +175,11 @@ public class PlayerController : MonoBehaviour
     {
         playerCamera.orthographicSize = newVision;
         recalculateBounds();
+    }
+
+    private void SmoothFollow(Vector3 targetPos)
+    {
+        Vector3 smoothFollow = Vector3.Lerp(playerCamera.transform.position, targetPos, smoothSpeed);
+        playerCamera.transform.position = smoothFollow;
     }
 }
