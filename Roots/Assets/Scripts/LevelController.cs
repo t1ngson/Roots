@@ -117,31 +117,37 @@ public class LevelController : MonoBehaviour
         return true;
     }
 
+    // returns a scale value to represent the speed of the root
     public static float getSpeedUpgradeValue()
     {
         return speedUpgradeLevel * 0.5f + 1;
     }
 
+    // returns a scaled value to represent the vision ahead of the root head
     public static float getVisionUpgradeValue()
     {
         return visionUpgradeLevel * 0.5f + 1;
     }
 
+    // returns the direct rain level
     public static int getRainUpgradeValue()
     {
         return rainUpgradeLevel;
     }
 
+    // returns the water tank level + 1
     public static int getWaterTankValue()
     {
         return waterTankLevel + 1;
     }
 
+    // returns direct drill level
     public static int getdrillUpgradeValue()
     {
         return drillUpgradeLevel;
     }
 
+    // Checks if the watering can level is equal to 10
     public static bool getWateringCanFull()
     {
         return wateringCanLevel == 10;

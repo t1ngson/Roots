@@ -52,3 +52,6 @@ TagManager:
   - name: Root
     uniqueID: 2304934907
     locked: 0
+  - name: Root Sprites
+    uniqueID: 836175933
+    locked: 0
