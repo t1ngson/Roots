@@ -9,6 +9,10 @@ public class Timer : MonoBehaviour
     public float timeValue = 30;
     public Text timerText;
 
+    public float deathTransitionTime = 3f;
+
+    public Animator deathTransition;
+
     void Update()
     {
         if (timeValue > 0)
@@ -18,7 +22,7 @@ public class Timer : MonoBehaviour
         else
         {
             timeValue = 0;
-            //SceneManager.LoadScene("End Scene");
+            LoadShopSceneDeath();
         }
         DisplayTime(timeValue);
     }
@@ -34,4 +38,18 @@ public class Timer : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
+    public void LoadShopSceneDeath()
+    {
+        StartCoroutine(LoadDeathAnim());
+    }
+
+    IEnumerator LoadDeathAnim(){
+        deathTransition.SetTrigger("StartDeath");
+        yield return new WaitForSeconds(deathTransitionTime);
+        SceneManager.LoadScene("Shop Scene");
+    }
+
+
+
 }
