@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
     [Header("Upgrade Sprites")]
     public GameObject Drill;
     public GameObject DDrill;
+    public GameObject[] WaterBottles;
+    public GameObject Glasses;
+    public GameObject[] Skates;
+    public GameObject WateringCan;
     
 
     // Start is called before the first frame update
@@ -160,13 +164,16 @@ public class PlayerController : MonoBehaviour
             Destroy(other);
             gameController.GetComponent<Sound>().playNomNom();
             LevelController.upgradeSpeed();
+            setSpeedUpgrade(LevelController.getSpeedUpgradeValue());
+            gameController.GetComponent<WorldGen>().recalculateAheadDistance();
         }
         else if (other.CompareTag("Water"))
         {
-            LevelController.waterCount++;
+            gameController.GetComponent<LevelController>().collectWater();
             Destroy(other);
             gameController.GetComponent<Sound>().playSplash();
             LevelController.upgradeVision();
+            setVisionUpgrade(LevelController.getVisionUpgradeValue());
         }
     }
 
@@ -199,6 +206,7 @@ public class PlayerController : MonoBehaviour
 
     private void updatePlayerSprites()
     {
+        // Drills
         switch (LevelController.getdrillUpgradeValue())
         {
             case 0:
@@ -217,5 +225,42 @@ public class PlayerController : MonoBehaviour
                 Debug.LogError("Drill upgrade invalid");
                 break;
         }
+        // WaterBottles
+        int numberOfBottles = LevelController.getWaterTankValue() - 1;
+        for (int i = 0; i < WaterBottles.Length; i++)
+        {
+            if (i < numberOfBottles)
+            {
+                WaterBottles[i].SetActive(true);
+            }
+            else
+            {
+                WaterBottles[i].SetActive(false);
+            }
+        }
+        // Glasses
+        if (LevelController.visionUpgradeLevel > 2)
+        {
+            Glasses.SetActive(true);
+        }
+        else
+        {
+            Glasses.SetActive(false);
+        }
+        // Skates
+        int numberOfSkates = LevelController.speedUpgradeLevel;
+        for (int i = 0; i < Skates.Length; i++)
+        {
+            if (i < numberOfSkates)
+            {
+                Skates[i].SetActive(true);
+            }
+            else
+            {
+                Skates[i].SetActive(false);
+            }
+        }
+        // WateringCan
+        WateringCan.SetActive(LevelController.getWateringCanFull());
     }
 }

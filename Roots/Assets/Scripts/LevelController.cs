@@ -31,6 +31,11 @@ public class LevelController : MonoBehaviour
     [SerializeField] GameObject nutrientText;
     [SerializeField] GameObject waterText;
 
+    [Header("Water usage")]
+    [SerializeField]private float timePerWaterUse;
+    private float lastWaterUseTime;
+
+
     private void Awake()
     {
         if (!initialised)
@@ -50,13 +55,29 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         maxWaterCount = getWaterTankValue() * maxWaterCount;
+        waterCount = 10;
+
+        lastWaterUseTime = Time.realtimeSinceStartup;
     }
 
     // Update is called once per frame
     void Update()
     {
         nutrientText.GetComponent<TextMeshProUGUI>().text = nutrientCount.ToString();
-        waterText.GetComponent<TextMeshProUGUI>().text = waterCount.ToString();
+        waterText.GetComponent<TextMeshProUGUI>().text = waterCount.ToString() + "/" + maxWaterCount.ToString();
+
+        // check water usage
+        /*if (lastWaterUseTime + timePerWaterUse < Time.realtimeSinceStartup)
+        {
+            useWater();
+            lastWaterUseTime += timePerWaterUse;
+        }*/
+    }
+
+    public void collectWater()
+    {
+        waterCount++;
+        waterCount = Mathf.Min(waterCount, maxWaterCount);
     }
 
     public static bool upgradeSpeed()
@@ -117,33 +138,49 @@ public class LevelController : MonoBehaviour
         return true;
     }
 
+    // returns a scale value to represent the speed of the root
     public static float getSpeedUpgradeValue()
     {
         return speedUpgradeLevel * 0.5f + 1;
     }
 
+    // returns a scaled value to represent the vision ahead of the root head
     public static float getVisionUpgradeValue()
     {
         return visionUpgradeLevel * 0.5f + 1;
     }
 
+    // returns the direct rain level
     public static int getRainUpgradeValue()
     {
-        return rainUpgradeLevel;
+        return rainUpgradeLevel + 1;
     }
 
+    // returns the water tank level + 1
     public static int getWaterTankValue()
     {
         return waterTankLevel + 1;
     }
 
+    // returns direct drill level
     public static int getdrillUpgradeValue()
     {
         return drillUpgradeLevel;
     }
 
+    // Checks if the watering can level is equal to 10
     public static bool getWateringCanFull()
     {
         return wateringCanLevel == 10;
+    }
+
+    private void useWater()
+    {
+        waterCount--;
+        if (waterCount <= 0)
+        {
+            //TODO: Exit Game
+            Debug.Log("Game Over");
+        }
     }
 }

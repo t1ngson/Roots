@@ -63,6 +63,13 @@ public class WorldGen : MonoBehaviour
 
         waterAdditionPerTile /= LevelController.getRainUpgradeValue();
         //GetComponent<LevelController>().visionUpgradeListener.AddListener(onVisionUpgrade);
+
+        // pregenerate world start
+        for (int i = 0; i < 5; i++)
+        {
+            generateTileLine();
+        }
+
     }
 
     void Update()
@@ -163,7 +170,7 @@ public class WorldGen : MonoBehaviour
         waterDensity = Mathf.Clamp(waterDensity, 0f, 0.5f);
     }
 
-    void recalculateAheadDistance()
+    public void recalculateAheadDistance()
     {
         int vertExtent = (int)LevelController.getVisionUpgradeValue();// (int)GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().orthographicSize;
         aheadDistance = vertExtent + 2;
