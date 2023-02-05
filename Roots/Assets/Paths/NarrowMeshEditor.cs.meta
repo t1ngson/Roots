@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 4f19c7ba708976e7a841f08713ae2d51
+<<<<<<<< HEAD:Roots/Assets/NarrowMeshEditor.cs.meta
+guid: 5f0d6ee3c85c0a65388dcc3168551253
+========
+guid: 8279177184c79554ba6ad672aaa97f2f
+>>>>>>>> main:Roots/Assets/Scripts/LevelController.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

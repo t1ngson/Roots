@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(RootRenderer))]
 public class PlayerController : MonoBehaviour
 {
     private GameObject gameController;
@@ -34,6 +36,16 @@ public class PlayerController : MonoBehaviour
     public GameObject Glasses;
     public GameObject[] Skates;
     public GameObject WateringCan;
+
+    public RootRenderer renderer;
+    public Path path;
+
+    public Vector2 posn;
+
+    private float timeSinceLastNode = 0;
+    private float timeBetweenNodes = 0;
+
+    Quaternion rot;
     
 
     // Start is called before the first frame update
@@ -73,22 +85,29 @@ public class PlayerController : MonoBehaviour
         maxDepth = -maxDepth;
 
         smoothSpeed = ( (11 *0.5f)+1 - LevelController.getVisionUpgradeValue()) / 100;
+        
+        renderer = GetComponent<RootRenderer>();
+        path = renderer.path;
+        renderer.autoUpdate = true;
+        renderer.spacing = 0.1f;
+        path.AutoSetControlPoints = true;
+        path.MovePoint(0,new Vector2(0,0));
+        path.MovePoint(3,new Vector2(0,0.2f));
     }
 
     // Update is called once per frame
     void Update()
     {
         updatePlayerSprites();
-        if (mouseControl)
+        if (mouseControl) {
             processMouseMovement();
-        else
+        } else
             processKeyboardMovement();
 
-        transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, leftBounds, rightBounds),
-            Mathf.Clamp(transform.position.y, maxDepth, 0.0f),
-            transform.position.z
-            );
+        posn = new Vector2(
+            Mathf.Clamp(posn.x, leftBounds, rightBounds),
+            Mathf.Clamp(posn.y, maxDepth, 0.0f)
+        );
 
         
         
@@ -97,49 +116,54 @@ public class PlayerController : MonoBehaviour
             resolution = new Vector2(Screen.width, Screen.height);
             recalculateBounds();
         }
-
-        Instantiate(trail, transform.position, transform.rotation);
+        timeSinceLastNode += Time.deltaTime;
+        if (timeSinceLastNode >= timeBetweenNodes) {
+            path.AddSegment(posn + new Vector2(0, 0.01f));
+            timeSinceLastNode -= timeBetweenNodes;
+        } else {
+            path.MovePoint(path.NumPoints-1,posn);
+        }
+        renderer.UpdateNarrowMesh();
+        //Instantiate(trail, transform.position, transform.rotation);
     }
 
     // Temporary movement algorithm for testing
     void processKeyboardMovement()
     {
-        Vector3 movement = new Vector3();
+        Vector2 movement = new Vector2();
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            movement += new Vector3(0, -1);
+            movement += new Vector2(0, -1);
         }
         else if (Input.GetKey(KeyCode.UpArrow))
         {
-            movement += new Vector3(0, 1);
+            movement += new Vector2(0, 1);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            movement += new Vector3(-1, 0);
+            movement += new Vector2(-1, 0);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            movement += new Vector3(1, 0);
+            movement += new Vector2(1, 0);
         }
 
-        transform.position += movement.normalized * playerSpeed * Time.deltaTime;
+        posn += movement.normalized * playerSpeed * Time.deltaTime;
     }
 
     void processMouseMovement()
     {
-        Vector3 mousePos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
 
-        Vector3 movement = mousePos - transform.position;
+        Vector2 movement = mousePos - posn;
 
-        movement.z = 0f;
+        posn += movement.normalized * playerSpeed * Time.deltaTime;
 
-        transform.position += movement.normalized * playerSpeed * Time.deltaTime;
 
         float AngleRad = Mathf.Atan2(movement.y, movement.x);
         float AngleDeg = (180 / Mathf.PI) * AngleRad;
-
-        transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
+        rot = Quaternion.Euler(0,0,AngleDeg);
     }
 
     void recalculateBounds()
@@ -156,7 +180,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision);
         GameObject other = collision.gameObject;
         if (other.CompareTag("Nutrient"))
         {
@@ -177,12 +200,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         // Make camera follow player
         Vector3 newCameraPosition =
-            new Vector3(Mathf.Clamp(transform.position.x, leftCameraBounds, rightCameraBounds),
-            transform.position.y,
+            new Vector3(Mathf.Clamp(posn.x, leftCameraBounds, rightCameraBounds),
+            posn.y,
             -10f);
         SmoothFollow(newCameraPosition);
     }
@@ -207,6 +230,7 @@ public class PlayerController : MonoBehaviour
     private void updatePlayerSprites()
     {
         // Drills
+        /*
         switch (LevelController.getdrillUpgradeValue())
         {
             case 0:
@@ -262,5 +286,6 @@ public class PlayerController : MonoBehaviour
         }
         // WateringCan
         WateringCan.SetActive(LevelController.getWateringCanFull());
+        */
     }
 }

@@ -85,7 +85,7 @@ public class WorldGen : MonoBehaviour
     void FixedUpdate()
     {
         //Debug.Log((int)player.transform.position.y - aheadDistance);
-        if ((int)player.transform.position.y - aheadDistance < currentDistance)
+        if ((int)player.GetComponent<PlayerController>().posn.y - aheadDistance < currentDistance)
         {
             Debug.Log("Generating new Line");
             generateTileLine();
