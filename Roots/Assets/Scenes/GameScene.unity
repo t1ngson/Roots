@@ -378,6 +378,7 @@ MonoBehaviour:
   mouseControl: 1
   playerSpeed: 3
   trail: {fileID: 5831934337286220101, guid: 3fb127e8c90f3784ca24f7d47f471c47, type: 3}
+  smoothSpeed: 0.01
 --- !u!4 &1405485926
 Transform:
   m_ObjectHideFlags: 0
@@ -518,8 +519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8279177184c79554ba6ad672aaa97f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nutrientCount: 0
-  waterCount: 0
   maxWaterCount: 0
 --- !u!82 &1631829810
 AudioSource:
