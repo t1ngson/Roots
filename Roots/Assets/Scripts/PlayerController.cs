@@ -229,7 +229,6 @@ public class PlayerController : MonoBehaviour
 
     private void updatePlayerSprites()
     {
-        // Drills
         /*
         switch (LevelController.getdrillUpgradeValue())
         {
@@ -249,43 +248,6 @@ public class PlayerController : MonoBehaviour
                 Debug.LogError("Drill upgrade invalid");
                 break;
         }
-        // WaterBottles
-        int numberOfBottles = LevelController.getWaterTankValue() - 1;
-        for (int i = 0; i < WaterBottles.Length; i++)
-        {
-            if (i < numberOfBottles)
-            {
-                WaterBottles[i].SetActive(true);
-            }
-            else
-            {
-                WaterBottles[i].SetActive(false);
-            }
-        }
-        // Glasses
-        if (LevelController.visionUpgradeLevel > 2)
-        {
-            Glasses.SetActive(true);
-        }
-        else
-        {
-            Glasses.SetActive(false);
-        }
-        // Skates
-        int numberOfSkates = LevelController.speedUpgradeLevel;
-        for (int i = 0; i < Skates.Length; i++)
-        {
-            if (i < numberOfSkates)
-            {
-                Skates[i].SetActive(true);
-            }
-            else
-            {
-                Skates[i].SetActive(false);
-            }
-        }
-        // WateringCan
-        WateringCan.SetActive(LevelController.getWateringCanFull());
         */
     }
 }
