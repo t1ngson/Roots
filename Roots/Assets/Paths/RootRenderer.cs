@@ -166,6 +166,11 @@ public class RootRenderer : MonoBehaviour {
         GetComponent<MeshFilter>().mesh = BBMesh;
 
         var renderer = GetComponent<MeshRenderer>();
+        if(renderer == null) {
+            Debug.Log("test");
+        } else {
+            Debug.Log("not null");
+        }
         renderer.sharedMaterial.mainTexture = texture;  
 
     }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
@@ -26,6 +28,8 @@ public class LevelController : MonoBehaviour
     //public UnityEvent<int> rainUpgradeListener;
 
     private static bool initialised = false;
+    [SerializeField] GameObject nutrientText;
+    [SerializeField] GameObject waterText;
 
     private void Awake()
     {
@@ -51,7 +55,8 @@ public class LevelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        nutrientText.GetComponent<TextMeshProUGUI>().text = nutrientCount.ToString();
+        waterText.GetComponent<TextMeshProUGUI>().text = waterCount.ToString();
     }
 
     public static bool upgradeSpeed()

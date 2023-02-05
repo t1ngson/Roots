@@ -29,13 +29,19 @@ public class PlayerController : MonoBehaviour
     [Header("Smooth Camera Following")]
     public float smoothSpeed = 0.1f;
 
+    [Header("Upgrade Sprites")]
+    public GameObject Drill;
+    public GameObject DDrill;
+
     public RootRenderer renderer;
     public Path path;
 
     public Vector2 posn;
 
     private float timeSinceLastNode = 0;
-    private float timeBetweenNodes = 1f;
+    private float timeBetweenNodes = 0;
+
+    Quaternion rot;
     
 
     // Start is called before the first frame update
@@ -88,9 +94,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (mouseControl)
+        updatePlayerSprites();
+        if (mouseControl) {
             processMouseMovement();
-        else
+        } else
             processKeyboardMovement();
 
         posn = new Vector2(
@@ -148,6 +155,11 @@ public class PlayerController : MonoBehaviour
         Vector2 movement = mousePos - posn;
 
         posn += movement.normalized * playerSpeed * Time.deltaTime;
+
+
+        float AngleRad = Mathf.Atan2(movement.y, movement.x);
+        float AngleDeg = (180 / Mathf.PI) * AngleRad;
+        rot = Quaternion.Euler(0,0,AngleDeg);
     }
 
     void recalculateBounds()
@@ -164,7 +176,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision);
         GameObject other = collision.gameObject;
         if (other.CompareTag("Nutrient"))
         {
@@ -180,7 +191,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         // Make camera follow player
         Vector3 newCameraPosition =
@@ -205,5 +216,29 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 smoothFollow = Vector3.Lerp(playerCamera.transform.position, targetPos, smoothSpeed);
         playerCamera.transform.position = smoothFollow;
+    }
+
+    private void updatePlayerSprites()
+    {
+        /*
+        switch (LevelController.getdrillUpgradeValue())
+        {
+            case 0:
+                Drill.SetActive(false);
+                DDrill.SetActive(false);
+                break;
+            case 1:
+                Drill.SetActive(true);
+                DDrill.SetActive(false);
+                break;
+            case 2:
+                Drill.SetActive(false);
+                DDrill.SetActive(true);
+                break;
+            default:
+                Debug.LogError("Drill upgrade invalid");
+                break;
+        }
+        */
     }
 }
