@@ -43,6 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Dirt
+    uniqueID: 3916836465
+    locked: 0
+  - name: Grass
+    uniqueID: 3296872661
+    locked: 0
   - name: Background
     uniqueID: 182493629
     locked: 0
