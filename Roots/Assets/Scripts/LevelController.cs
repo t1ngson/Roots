@@ -10,33 +10,42 @@ public class LevelController : MonoBehaviour
     public int nutrientCount;
     public int waterCount;
 
+    public int maxWaterCount;
+
     [Header("Upgrades")]
-    public float speedUpgradeLevel;
-    public float visionUpgradeLevel;
-    public int RainUpgradeLevel;
-    public int WaterTankLevel;
-    public int DrillUpgradeLevel;
-    public bool WateringCan;
+    public static int speedUpgradeLevel;
+    public static int visionUpgradeLevel;
+    public static int rainUpgradeLevel;
+    public static int waterTankLevel;
+    public static int drillUpgradeLevel;
+    public static bool wateringCan;
 
     [Header("Upgrade Listeners")]
-    public UnityEvent<float> speedUpgradeListener;
-    public UnityEvent<float> visionUpgradeListener;
+    //public UnityEvent<float> speedUpgradeListener;
+    //public UnityEvent<float> visionUpgradeListener;
+    //public UnityEvent<int> rainUpgradeListener;
+
+    private static bool initialised = false;
 
     private void Awake()
     {
-        // initialise Values
-        speedUpgradeLevel = 1;
-        visionUpgradeLevel = 1;
-        RainUpgradeLevel = 1;
-        WaterTankLevel = 1;
-        DrillUpgradeLevel = 1;
-        WateringCan = false;
+        if (!initialised)
+        {
+            // initialise Values
+            speedUpgradeLevel = 10;
+            visionUpgradeLevel = 10;
+            rainUpgradeLevel = 0;
+            waterTankLevel = 0;
+            drillUpgradeLevel = 0;
+            wateringCan = false;
+            initialised = true;
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        maxWaterCount = getWaterTankValue() * maxWaterCount;
     }
 
     // Update is called once per frame
@@ -45,15 +54,62 @@ public class LevelController : MonoBehaviour
         
     }
 
-    public void upgradeSpeed()
+    public static void upgradeSpeed()
     {
-        speedUpgradeLevel += 0.5f;
-        speedUpgradeListener.Invoke(speedUpgradeLevel);
+        speedUpgradeLevel += 1;
+        speedUpgradeLevel = Mathf.Min(speedUpgradeLevel, 5);
+        //speedUpgradeListener.Invoke(speedUpgradeLevel);
     }
 
-    public void upgradeVision()
+    public static void upgradeVision()
     {
-        visionUpgradeLevel += 0.5f;
-        visionUpgradeListener.Invoke(visionUpgradeLevel);
+        visionUpgradeLevel += 1;
+        visionUpgradeLevel = Mathf.Min(visionUpgradeLevel, 5);
+        //visionUpgradeListener.Invoke(visionUpgradeLevel);
+    }
+
+    public void upgradeRain()
+    {
+        rainUpgradeLevel += 1;
+        rainUpgradeLevel = Mathf.Min(visionUpgradeLevel, 5);
+        //rainUpgradeListener.Invoke(rainUpgradeLevel);
+    }
+
+    public void upgradeWaterTank()
+    {
+        waterTankLevel += 1;
+        waterTankLevel = Mathf.Min(waterTankLevel, 5);
+        //rainUpgradeListener.Invoke(rainUpgradeLevel);
+    }
+
+    public void upgradeDrill()
+    {
+        drillUpgradeLevel += 1;
+        drillUpgradeLevel = Mathf.Min(drillUpgradeLevel, 2);
+    }
+
+    public static float getSpeedUpgradeValue()
+    {
+        return speedUpgradeLevel * 0.5f + 1;
+    }
+
+    public static float getVisionUpgradeValue()
+    {
+        return visionUpgradeLevel * 0.5f + 1;
+    }
+
+    public static int getRainUpgradeValue()
+    {
+        return rainUpgradeLevel;
+    }
+
+    public static int getWaterTankValue()
+    {
+        return waterTankLevel + 1;
+    }
+
+    public static int getdrillUpgradeValue()
+    {
+        return drillUpgradeLevel;
     }
 }

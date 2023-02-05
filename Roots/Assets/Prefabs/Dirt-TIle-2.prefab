@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 7541383588072742338}
   - component: {fileID: 8463948023623606659}
   m_Layer: 0
-  m_Name: TIle
+  m_Name: Dirt-TIle-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7541383588072742338
 Transform:
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 182493629
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 11a70202e6ed270458a3a4194879e6b8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4d54c202ff8397448884080da26d3cb6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

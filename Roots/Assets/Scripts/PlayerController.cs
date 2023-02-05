@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private float leftCameraBounds;
     private float rightCameraBounds;
 
+    private float maxDepth;
+
     private Vector2 resolution;
 
     // Start is called before the first frame update
@@ -34,11 +36,29 @@ public class PlayerController : MonoBehaviour
         //recalculateBounds();
 
         gameController = GameObject.FindGameObjectWithTag("GameController");
-        LevelController controller = gameController.GetComponent<LevelController>();
-        controller.speedUpgradeListener.AddListener(onSpeedUpgrade);
-        onSpeedUpgrade(controller.speedUpgradeLevel);
-        controller.visionUpgradeListener.AddListener(onVisionUpgrade);
-        onVisionUpgrade(controller.visionUpgradeLevel);
+        //LevelController controller = gameController.GetComponent<LevelController>();
+        //controller.speedUpgradeListener.AddListener(onSpeedUpgrade);
+        setSpeedUpgrade(LevelController.getSpeedUpgradeValue());
+        //controller.visionUpgradeListener.AddListener(onVisionUpgrade);
+        setVisionUpgrade(LevelController.getVisionUpgradeValue());
+
+        switch (LevelController.getdrillUpgradeValue())
+        {
+            case 0:
+                maxDepth = gameController.GetComponent<WorldGen>().partialStoneDepth - 1;
+                break;
+            case 1:
+                maxDepth = gameController.GetComponent<WorldGen>().StoneDepth - 1;
+                break;
+            case 2:
+                maxDepth = gameController.GetComponent<WorldGen>().endGameDepth + 5;
+                break;
+            default:
+                Debug.LogError("drill upgrade value not in range");
+                maxDepth = 5;
+                break;
+        }
+        maxDepth = -maxDepth;
     }
 
     // Update is called once per frame
@@ -48,6 +68,12 @@ public class PlayerController : MonoBehaviour
             processMouseMovement();
         else
             processKeyboardMovement();
+
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, leftBounds, rightBounds),
+            Mathf.Clamp(transform.position.y, maxDepth, 0.0f),
+            transform.position.z
+            );
 
         // Make camera follow player
         playerCamera.transform.position =
@@ -85,11 +111,6 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position += movement.normalized * playerSpeed * Time.deltaTime;
-
-        transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, leftBounds, rightBounds),
-            transform.position.y,
-            0);
     }
 
     void processMouseMovement()
@@ -101,11 +122,6 @@ public class PlayerController : MonoBehaviour
         movement.z = 0f;
 
         transform.position += movement.normalized * playerSpeed * Time.deltaTime;
-
-        transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, leftBounds, rightBounds),
-            transform.position.y,
-            0);
     }
 
     void recalculateBounds()
@@ -128,12 +144,13 @@ public class PlayerController : MonoBehaviour
         {
             gameController.GetComponent<LevelController>().nutrientCount++;
             Destroy(other);
+            LevelController.upgradeSpeed();
         }
         else if (other.CompareTag("Water"))
         {
             gameController.GetComponent<LevelController>().waterCount++;
             Destroy(other);
-            gameController.GetComponent<LevelController>().upgradeVision();
+            LevelController.upgradeVision();
         }
     }
 
@@ -142,12 +159,12 @@ public class PlayerController : MonoBehaviour
         Instantiate(trail, transform.position, transform.rotation);
     }
 
-    public void onSpeedUpgrade(float newSpeed)
+    public void setSpeedUpgrade(float newSpeed)
     {
         playerSpeed = newSpeed;
     }
 
-    public void onVisionUpgrade(float newVision)
+    public void setVisionUpgrade(float newVision)
     {
         playerCamera.orthographicSize = newVision;
         recalculateBounds();
