@@ -31,3 +31,6 @@ sysinfo.txt
 *.apk
 *.unitypackage
 *.vscode/
+Roots/.vscode/settings.json
+Roots/ProjectSettings/BurstAotSettings_StandaloneLinux64.json
+Roots/ProjectSettings/CommonBurstAotSettings.json

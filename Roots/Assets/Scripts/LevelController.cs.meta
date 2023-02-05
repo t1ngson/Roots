@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Roots/Assets/NarrowMeshEditor.cs.meta
+guid: 8d229aeb03006305bb482426ef10462b
+========
+guid: 8279177184c79554ba6ad672aaa97f2f
+>>>>>>>> main:Roots/Assets/Scripts/LevelController.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
