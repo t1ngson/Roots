@@ -14,7 +14,7 @@ public class Sound : MonoBehaviour
 
     void Start()
     {
-        adSource.Play();   
+        //adSource.Play();   
     }
 
     // Update is called once per frame
