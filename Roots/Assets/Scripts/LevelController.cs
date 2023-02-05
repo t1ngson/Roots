@@ -31,6 +31,11 @@ public class LevelController : MonoBehaviour
     [SerializeField] GameObject nutrientText;
     [SerializeField] GameObject waterText;
 
+    [Header("Water usage")]
+    [SerializeField]private float timePerWaterUse;
+    private float lastWaterUseTime;
+
+
     private void Awake()
     {
         if (!initialised)
@@ -50,13 +55,29 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         maxWaterCount = getWaterTankValue() * maxWaterCount;
+        waterCount = 10;
+
+        lastWaterUseTime = Time.realtimeSinceStartup;
     }
 
     // Update is called once per frame
     void Update()
     {
         nutrientText.GetComponent<TextMeshProUGUI>().text = nutrientCount.ToString();
-        waterText.GetComponent<TextMeshProUGUI>().text = waterCount.ToString();
+        waterText.GetComponent<TextMeshProUGUI>().text = waterCount.ToString() + "/" + maxWaterCount.ToString();
+
+        // check water usage
+        if (lastWaterUseTime + timePerWaterUse > Time.realtimeSinceStartup)
+        {
+            useWater();
+            lastWaterUseTime += timePerWaterUse;
+        }
+    }
+
+    public void collectWater()
+    {
+        waterCount++;
+        waterCount = Mathf.Min(waterCount, maxWaterCount);
     }
 
     public static bool upgradeSpeed()
@@ -132,7 +153,7 @@ public class LevelController : MonoBehaviour
     // returns the direct rain level
     public static int getRainUpgradeValue()
     {
-        return rainUpgradeLevel;
+        return rainUpgradeLevel + 1;
     }
 
     // returns the water tank level + 1
@@ -151,5 +172,15 @@ public class LevelController : MonoBehaviour
     public static bool getWateringCanFull()
     {
         return wateringCanLevel == 10;
+    }
+
+    private void useWater()
+    {
+        waterCount--;
+        if (waterCount <= 0)
+        {
+            //TODO: Exit Game
+            Debug.Log("Game Over");
+        }
     }
 }

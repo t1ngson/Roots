@@ -1794,7 +1794,7 @@ MonoBehaviour:
   - {fileID: 1964440062}
   - {fileID: 520292691}
   - {fileID: 1460099135}
-  WateringCan: {fileID: 0}
+  WateringCan: {fileID: 808198902}
 --- !u!4 &1405485926
 Transform:
   m_ObjectHideFlags: 0

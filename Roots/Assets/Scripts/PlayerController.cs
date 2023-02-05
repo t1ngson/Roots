@@ -164,13 +164,16 @@ public class PlayerController : MonoBehaviour
             Destroy(other);
             gameController.GetComponent<Sound>().playNomNom();
             LevelController.upgradeSpeed();
+            setSpeedUpgrade(LevelController.getSpeedUpgradeValue());
+            gameController.GetComponent<WorldGen>().recalculateAheadDistance();
         }
         else if (other.CompareTag("Water"))
         {
-            LevelController.waterCount++;
+            gameController.GetComponent<LevelController>().collectWater();
             Destroy(other);
             gameController.GetComponent<Sound>().playSplash();
             LevelController.upgradeVision();
+            setVisionUpgrade(LevelController.getVisionUpgradeValue());
         }
     }
 
