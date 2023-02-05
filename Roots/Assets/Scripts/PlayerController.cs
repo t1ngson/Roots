@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public GameObject[] Skates;
     public GameObject WateringCan;
 
+    [Header("Pathing")]
     public RootRenderer renderer;
     public Path path;
 
@@ -46,6 +47,9 @@ public class PlayerController : MonoBehaviour
     private float timeBetweenNodes = 1;
 
     Quaternion rot;
+
+    [Header("Head management")]
+    public GameObject DummyHead;
     
 
     // Start is called before the first frame update
@@ -126,6 +130,8 @@ public class PlayerController : MonoBehaviour
         renderer.UpdateNarrowMesh();
         //Instantiate(trail, transform.position, transform.rotation);
         GetComponent<CircleCollider2D>().offset = posn;
+        DummyHead.transform.position = new Vector3(posn.x, posn.y, 10);
+        DummyHead.transform.rotation = rot;
     }
 
     // Temporary movement algorithm for testing
