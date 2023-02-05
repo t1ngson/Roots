@@ -10,7 +10,7 @@ public class Sound : MonoBehaviour
     public AudioSource splash;
     public AudioSource sparkle;
     public AudioSource whack;
-    public AudioSource nom; 
+    public AudioSource nom;
 
     void Start()
     {
@@ -20,10 +20,35 @@ public class Sound : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void playSound(AudioSource audioSource){
+    void playSound(AudioSource audioSource) {
         audioSource.Play();
+    }
+
+    public void playDeathSound()
+    {
+        deathSound.Play();
+    }
+
+    public void playSplash()
+    {
+        splash.Play();
+    }
+
+    public void playSparkle()
+    {
+        sparkle.Play();
+    }
+
+    public void playWhack()
+    {
+        whack.Play();
+    }
+
+    public void playNomNom()
+    {
+        nom.Play();
     }
 }

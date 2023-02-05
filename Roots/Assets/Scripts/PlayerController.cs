@@ -181,12 +181,14 @@ public class PlayerController : MonoBehaviour
         {
             LevelController.nutrientCount++;
             Destroy(other);
+            gameController.GetComponent<Sound>().playNomNom();
             LevelController.upgradeSpeed();
         }
         else if (other.CompareTag("Water"))
         {
             LevelController.waterCount++;
             Destroy(other);
+            gameController.GetComponent<Sound>().playSplash();
             LevelController.upgradeVision();
         }
     }
