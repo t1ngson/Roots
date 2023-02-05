@@ -125,6 +125,7 @@ public class PlayerController : MonoBehaviour
         }
         renderer.UpdateNarrowMesh();
         //Instantiate(trail, transform.position, transform.rotation);
+        GetComponent<CircleCollider2D>().offset = posn;
     }
 
     // Temporary movement algorithm for testing
