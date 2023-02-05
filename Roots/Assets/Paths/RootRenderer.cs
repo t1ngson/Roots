@@ -10,7 +10,7 @@ using System;
 public class RootRenderer : MonoBehaviour {
 
     PathCreator creator;
-    Path path;
+    public Path path;
 
     float pixelDim = 0.1f;
     int pixelsPerScreenX;
@@ -30,7 +30,7 @@ public class RootRenderer : MonoBehaviour {
         return Color.Lerp(Color.black, Color.clear, distFromCurve);
     }    
 
-    public int approximateClosest(Vector2[] points, Vector2 point, int? previousMatch) {
+    public int approximateClosest(Vector2[] points, Vector2 point, int previousMatch, int aboveMatch) {
         int closestPoint;
         if(point.y < points[0].y) {
             closestPoint = 0;
@@ -56,8 +56,12 @@ public class RootRenderer : MonoBehaviour {
             closestPoint = Vector2.Distance(points[low], point) < Vector2.Distance(point, points[high]) ? low : high;
         }
 
-        if(previousMatch != null && Vector2.Distance(points[(int)previousMatch], point) < Vector2.Distance(points[closestPoint], point)){
-            closestPoint = (int) previousMatch;
+        if(previousMatch >= 0 && Vector2.Distance(points[previousMatch], point) < Vector2.Distance(points[closestPoint], point)){
+            closestPoint = previousMatch;
+        }
+
+        if(aboveMatch >= 0 && Vector2.Distance(points[aboveMatch], point) < Vector2.Distance(points[closestPoint], point)){
+            closestPoint = aboveMatch;
         }
 
         while(closestPoint < points.Length - 1 && Vector2.Distance(points[closestPoint + 1], point) < Vector2.Distance(points[closestPoint], point)) {
@@ -109,17 +113,21 @@ public class RootRenderer : MonoBehaviour {
             false
         );
 
-        int? previousClosest = null;
-        for (int currentX = 0; currentX < noPixelsX; currentX++) {
-            for(int currentY = 0; currentY < noPixelsY; currentY++) {
+        int[,] previousClosests = new int[noPixelsX,noPixelsY];
+        int previousClosest = -1;
+        for (int currentY = 0; currentY < noPixelsY; currentY++) {
+            for(int currentX = 0; currentX < noPixelsX; currentX++) {
                 Vector2 worldVector = new Vector2((currentX + meshOffsetX)*pixelDim + 0.5f*pixelDim, 0.5f*pixelDim + (currentY + meshOffsetY) * pixelDim);
-                int closest = approximateClosest(points, worldVector, previousClosest);
+                int prevClosest = currentX > 0 ? previousClosests[currentX-1, currentY] : -1;
+                int aboveClosest = currentY > 0 ? previousClosests[currentX, currentY - 1] : -1;
+                int closest = approximateClosest(points, worldVector, previousClosest, aboveClosest);
                 texture.SetPixel(
                     currentX, 
                     currentY, 
                     GetColor(Vector2.Distance(points[closest], worldVector))
                 );
                 previousClosest = closest;
+                previousClosests[currentX, currentY] = closest;
             }
         }
         texture.Apply();
@@ -142,12 +150,12 @@ public class RootRenderer : MonoBehaviour {
         };
 
         int[] BBTris = {
+            0,
+            1,
+            2,
             2,
             1,
-            0,
-            3,
-            1,
-            2
+            3
         };
         
         Mesh BBMesh = new Mesh();
