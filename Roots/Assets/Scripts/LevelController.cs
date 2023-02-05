@@ -18,7 +18,7 @@ public class LevelController : MonoBehaviour
     public static int rainUpgradeLevel;
     public static int waterTankLevel;
     public static int drillUpgradeLevel;
-    public static bool wateringCan;
+    public static int wateringCan;
 
     [Header("Upgrade Listeners")]
     //public UnityEvent<float> speedUpgradeListener;
@@ -37,7 +37,7 @@ public class LevelController : MonoBehaviour
             rainUpgradeLevel = 0;
             waterTankLevel = 0;
             drillUpgradeLevel = 0;
-            wateringCan = false;
+            wateringCan = 0;
             initialised = true;
         }
     }
