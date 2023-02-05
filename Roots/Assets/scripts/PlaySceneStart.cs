@@ -9,4 +9,12 @@ public class PlaySceneStart : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    public void GoToEndScene(){
+        SceneManager.LoadScene("End Scene");
+    }
+
+    public void GoToShop(){
+        SceneManager.LoadScene("Shop Scene");
+    }
 }
