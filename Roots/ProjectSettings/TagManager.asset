@@ -49,6 +49,9 @@ TagManager:
   - name: Collectables
     uniqueID: 1396972025
     locked: 0
+  - name: Player
+    uniqueID: 1711714541
+    locked: 0
   - name: Root
     uniqueID: 2304934907
     locked: 0
