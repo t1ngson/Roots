@@ -67,11 +67,11 @@ public class LevelController : MonoBehaviour
         waterText.GetComponent<TextMeshProUGUI>().text = waterCount.ToString() + "/" + maxWaterCount.ToString();
 
         // check water usage
-        if (lastWaterUseTime + timePerWaterUse > Time.realtimeSinceStartup)
+        /*if (lastWaterUseTime + timePerWaterUse < Time.realtimeSinceStartup)
         {
             useWater();
             lastWaterUseTime += timePerWaterUse;
-        }
+        }*/
     }
 
     public void collectWater()
