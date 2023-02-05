@@ -74,11 +74,7 @@ public class LevelController : MonoBehaviour
         return true;
     }
 
-<<<<<<< Updated upstream
-    public void upgradeRain()
-=======
     public static bool upgradeRain()
->>>>>>> Stashed changes
     {
         if (rainUpgradeLevel == 5)
             return false;
@@ -88,11 +84,7 @@ public class LevelController : MonoBehaviour
         return true;
     }
 
-<<<<<<< Updated upstream
-    public void upgradeWaterTank()
-=======
     public static bool upgradeWaterTank()
->>>>>>> Stashed changes
     {
         if (waterTankLevel == 5)
             return false;
@@ -102,11 +94,7 @@ public class LevelController : MonoBehaviour
         return true;
     }
 
-<<<<<<< Updated upstream
-    public void upgradeDrill()
-=======
     public static bool upgradeDrill()
->>>>>>> Stashed changes
     {
         if (drillUpgradeLevel == 2)
             return false;
