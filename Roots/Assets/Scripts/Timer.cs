@@ -6,8 +6,13 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    public float timeValue = 30;
+    private float timeValue = 30;
     public Text timerText;
+
+    private void Awake()
+    {
+        timeValue = GameObject.FindGameObjectWithTag("GameController").GetComponent<LevelController>().timePerRun;
+    }
 
     void Update()
     {

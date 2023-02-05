@@ -14,6 +14,8 @@ public class LevelController : MonoBehaviour
 
     public int maxWaterCount;
 
+    public float timePerRun;
+
     [Header("Upgrades")]
     public static int speedUpgradeLevel;
     public static int visionUpgradeLevel;
