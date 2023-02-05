@@ -5,24 +5,39 @@ using UnityEngine.SceneManagement;
 
 public class PlaySceneStart : MonoBehaviour
 {
+    public Animator transition;
+    public float transitionTime = 1f;
     public void PlayButton()
     {
-        SceneManager.LoadScene("GameScene");
+        LoadNextScene("GameScene");
     }
 
     public void GoToEndScene(){
-        SceneManager.LoadScene("End Scene");
+        LoadNextScene("End Scene");
     }
 
     public void GoToShop(){
-        SceneManager.LoadScene("Shop Scene");
+        LoadNextScene("Shop Scene");
     }
 
     public void GoToTutorial(){
-        SceneManager.LoadScene("Tutorial Scene");
+        LoadNextScene("Tutorial Scene");
     }
 
     public void GoToMenu(){
-        SceneManager.LoadScene("Main Menu");
+        LoadNextScene("Main Menu");
+    }
+
+
+    public void LoadNextScene(string sceneName)
+    {
+        StartCoroutine(LoadLevelAnim(sceneName));
+    }
+
+    IEnumerator LoadLevelAnim(string sceneName)
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime);
+        SceneManager.LoadScene(sceneName);
     }
 }
