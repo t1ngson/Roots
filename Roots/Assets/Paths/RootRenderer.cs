@@ -12,7 +12,7 @@ public class RootRenderer : MonoBehaviour {
     PathCreator creator;
     public Path path;
 
-    float pixelDim = 0.1f;
+    float pixelDim = 0.05f;
     int pixelsPerScreenX;
     public bool autoUpdate;
 
@@ -28,7 +28,31 @@ public class RootRenderer : MonoBehaviour {
     }
 
     public Color GetColor(float distFromCurve) {
-        return Color.Lerp(Color.black, Color.clear, distFromCurve);
+
+        float coreThickness = 0.15f;
+        float barkThickness = 0.15f;
+        float crossfadeDist = 0.1f;
+        Color coreColor = new Color(0.6784f,0.5647f,0.4824f,1);
+        Color barkColor = new Color(0.4902f,0.2353f,0.0471f,1);
+
+
+        if (distFromCurve > coreThickness + barkThickness + crossfadeDist) {
+            return Color.clear;
+        } else if (distFromCurve < coreThickness){
+            return coreColor;
+        } else if (distFromCurve < coreThickness + barkThickness) {
+            return Color.Lerp(
+                coreColor,
+                barkColor,
+                (distFromCurve - coreThickness) / (barkThickness)
+            );
+        } else {
+            return Color.Lerp(
+                barkColor,
+                Color.clear,
+                (distFromCurve - (barkThickness + coreThickness)) / (crossfadeDist)
+            );
+        }
     }    
 
     public int approximateClosest(Vector2[] points, Vector2 point, int previousMatch, int aboveMatch) {
