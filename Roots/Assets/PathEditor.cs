@@ -24,7 +24,7 @@ public class PathEditor : Editor
     void OnSceneGUI() {
         Input();
         Draw();
-}
+    }
 
     void Input() {
         Event guiEvent = Event.current;
@@ -37,7 +37,6 @@ public class PathEditor : Editor
     }
 
     void Draw() {
-
         Handles.color = Color.black;
         for(int i = 0; i < path.NumSegments; i++) {
             Vector2[] points = path.GetPointsInSegment(i);

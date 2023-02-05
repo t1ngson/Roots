@@ -5,7 +5,7 @@ using System;
 
 [System.Serializable]
 public class Path {
-    [SerializeField]
+    [SerializeField, HideInInspector]
     List<Vector2> points;
     [SerializeField, HideInInspector]
     bool autoSetControlPoints;
@@ -17,10 +17,12 @@ public class Path {
             centre + (Vector2.right + Vector2.down)*0.5f,
             centre + Vector2.right
         };
+        Debug.Log("points length initial: " + points.Count);
     }
 
 
     public void AddSegment(Vector2 anchor) {
+        Debug.Log("points length: " + points.Count);
         points.Add(points[points.Count - 1]*2f - points[points.Count-2]);
         points.Add((points[points.Count - 1] + anchor)*0.5f);
         points.Add(anchor);
@@ -126,8 +128,52 @@ public class Path {
                 Vector2 dir = (points[anchorIndex] - newPosition).normalized;
                 points[correspondingControlIndex] = points[anchorIndex] + dir*dist;
             }
-            AutomateAllAffected(correspondingControlIndex);
+            if(autoSetControlPoints)
+                AutomateAllAffected(anchorIndex);
         }
 
+    }
+
+
+    public static Vector2 EvaluateQuadratic(Vector2 a, Vector2 b, Vector2 c, float t) {
+        Vector2 p0 = Vector2.Lerp(a, b, t);
+        Vector2 p1 = Vector2.Lerp(b, c, t);
+        return Vector2.Lerp(p0, p1, t);
+    }
+
+    public static Vector2 EvaluateCubic(Vector2 a, Vector2 b, Vector2 c, Vector2 d, float t) {
+        Vector2 p1Quadratic = EvaluateQuadratic(a, b, c, t);
+        Vector2 p2Quadratic = EvaluateQuadratic(b, c, d, t);
+        return Vector2.Lerp(p1Quadratic, p2Quadratic, t);
+    }
+
+    public Vector2[] CalculateEvenlySpaced(float spacing, float resolution = 1) {
+        List<Vector2> evenlySpacedPoints = new List<Vector2>();
+        evenlySpacedPoints.Add(points[0]);
+        Vector2 previousPoint = points[0];
+        float dstSinceLastPoint = 0;
+        for(int segmentIndex = 0; segmentIndex < NumSegments; segmentIndex++) {
+            Vector2[] p = GetPointsInSegment(segmentIndex);
+            float controlNetLength = Vector2.Distance(p[0], p[1]) + Vector2.Distance(p[1], p[2]) + Vector2.Distance(p[2], p[3]);
+            float estimatedCurveLength = Vector2.Distance(p[0], p[3]) + controlNetLength/2;
+            int divisions = Mathf.CeilToInt(estimatedCurveLength * resolution * 10);
+            float t = 0;
+            while (t <= 1) {
+                t += 1f/divisions;
+                Vector2 pointOnCurve = EvaluateCubic(p[0], p[1], p[2], p[3], t);
+                dstSinceLastPoint += Vector2.Distance(previousPoint, pointOnCurve);
+
+                while (dstSinceLastPoint >= spacing) {
+                    float overshootDst = dstSinceLastPoint - spacing;
+                    Vector2 newEvenlySpacedPoint = pointOnCurve + (previousPoint - pointOnCurve).normalized * overshootDst;
+                    evenlySpacedPoints.Add(newEvenlySpacedPoint);
+                    dstSinceLastPoint = overshootDst;
+                    previousPoint = newEvenlySpacedPoint;
+                }
+
+                previousPoint = pointOnCurve;
+            }
+        }
+        return evenlySpacedPoints.ToArray();
     }
 }
