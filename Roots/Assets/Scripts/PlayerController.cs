@@ -142,13 +142,13 @@ public class PlayerController : MonoBehaviour
         GameObject other = collision.gameObject;
         if (other.CompareTag("Nutrient"))
         {
-            gameController.GetComponent<LevelController>().nutrientCount++;
+            LevelController.nutrientCount++;
             Destroy(other);
             LevelController.upgradeSpeed();
         }
         else if (other.CompareTag("Water"))
         {
-            gameController.GetComponent<LevelController>().waterCount++;
+            LevelController.waterCount++;
             Destroy(other);
             LevelController.upgradeVision();
         }

@@ -7,8 +7,8 @@ public class LevelController : MonoBehaviour
 {
 
     [Header("Levels")]
-    public int nutrientCount;
-    public int waterCount;
+    public static int nutrientCount;
+    public static int waterCount;
 
     public int maxWaterCount;
 
