@@ -7,22 +7,40 @@ using UnityEngine.Assertions;
 public class WorldGen : MonoBehaviour
 {
 
-    public GameObject[] tiles;
-    public int[] tileWeights;
-    private int totalWeights;
+    [Header("Dirt TileMaps")]
+    public GameObject[] dirtTiles;
+    public int[] dirtTileWeights;
+    private int dirtTotalWeights;
 
+    [Header("Partial Stone TileMaps")]
+    public GameObject[] partialRockTiles;
+    public int[] partialRockTileWeights;
+    private int partialRockTotalWeights;
+
+    [Header("Rock TileMaps")]
+    public GameObject[] rockTiles;
+    public int[] rockTileWeights;
+    private int rockTotalWeights;
+
+    [Header("Collectable prefabs")]
     public GameObject nutrient;
 	public GameObject water;
 
+    [Header("Map Settings")]
     public int aheadDistance;
     public int tileWidth;
+    public int partialStoneDepth;
+    public int StoneDepth;
+    public int endGameDepth;
     public float nutrientDensity;
     public float waterDensity;
+    public float nutrientAdditionPerTile;
+    public float waterAdditionPerTile;
 
     private GameObject player = null;
 
     //private int count;
-    private int currentDistance;
+    public int currentDistance;
 
     //private Vector2 resolution;
 
@@ -39,7 +57,12 @@ public class WorldGen : MonoBehaviour
 
         recalculateAheadDistance();
 
-        totalWeights = tileWeights.Sum();
+        dirtTotalWeights = dirtTileWeights.Sum();
+        partialRockTotalWeights = partialRockTileWeights.Sum();
+        rockTotalWeights = rockTileWeights.Sum();
+
+        waterAdditionPerTile /= LevelController.getRainUpgradeValue();
+        //GetComponent<LevelController>().visionUpgradeListener.AddListener(onVisionUpgrade);
     }
 
     void Update()
@@ -73,8 +96,22 @@ public class WorldGen : MonoBehaviour
     {
         for (int i = -tileWidth / 2; i <= tileWidth/2; i++)
         {
-            //GameObject toGenerate = (GameObject)tiles.GetValue(Random.Range(0, tiles.Length));
-            Instantiate(getTileToGenerate(), new Vector3(i, currentDistance, 0), Quaternion.identity);
+            GameObject toGenerate;
+            if (currentDistance > -partialStoneDepth)
+            {
+                //Debug.Log("Generating Dirt");
+                toGenerate = getTileToGenerate(dirtTiles, dirtTileWeights, dirtTotalWeights);
+            } else if (currentDistance > -StoneDepth)
+            {
+                //Debug.Log("Generating Partial Rock");
+                toGenerate = getTileToGenerate(partialRockTiles, partialRockTileWeights, partialRockTotalWeights);
+            } else
+            {
+                //Debug.Log("Generating stone");
+                toGenerate = getTileToGenerate(rockTiles, rockTileWeights, rockTotalWeights);
+            }
+
+            Instantiate(toGenerate, new Vector3(i, currentDistance, 0), Quaternion.identity);
         }
         for (int i = 0; i < tileWidth * nutrientDensity; i++)
         {
@@ -85,10 +122,10 @@ public class WorldGen : MonoBehaviour
             generateWater(currentDistance);
         }
 
-        currentDistance--;
+        incrementTileDistance();
     }
 
-    GameObject getTileToGenerate()
+    GameObject getTileToGenerate(GameObject[] tiles, int[] tileWeights, int totalWeights)
     {
         int offset = Random.Range(0, totalWeights);
         //Debug.Log(offset);
@@ -117,9 +154,18 @@ public class WorldGen : MonoBehaviour
         Instantiate(water, new Vector3(position, yLevel, 0), Quaternion.identity);
     }
 
+    void incrementTileDistance()
+    {
+        currentDistance--;
+        nutrientDensity += nutrientAdditionPerTile;
+        nutrientDensity = Mathf.Clamp(nutrientDensity, 0f, 0.5f);
+        waterDensity += waterAdditionPerTile;
+        waterDensity = Mathf.Clamp(waterDensity, 0f, 0.5f);
+    }
+
     void recalculateAheadDistance()
     {
-        int vertExtent = (int)GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().orthographicSize;
+        int vertExtent = (int)LevelController.getVisionUpgradeValue();// (int)GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().orthographicSize;
         aheadDistance = vertExtent + 2;
     }
 }

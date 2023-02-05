@@ -482,17 +482,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4900f6e07ca3df84f85b0dc29d56a442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles:
+  dirtTiles:
   - {fileID: 1434280549635666318, guid: 8b77d5d1ecd4b6645bb9bf26e29523a7, type: 3}
   - {fileID: 1434280549635666318, guid: 95697809556f2ce46aee77f46223d51f, type: 3}
   - {fileID: 1434280549635666318, guid: d351fc7195da6764db4aa7a05e76b312, type: 3}
-  tileWeights: 0a0000000500000002000000
+  dirtTileWeights: 0c0000000600000002000000
+  partialRockTiles:
+  - {fileID: 1434280549635666318, guid: e04cfceea8231e34489aa1397cb7919c, type: 3}
+  partialRockTileWeights: 01000000
+  rockTiles:
+  - {fileID: 1434280549635666318, guid: d6744ba883288de49839c68ea7220342, type: 3}
+  - {fileID: 1434280549635666318, guid: d0364846b83ce6041934e3396b8da883, type: 3}
+  rockTileWeights: 0500000005000000
   nutrient: {fileID: 3154614921209774362, guid: 749bedd02005ab24e90635cd897f2388, type: 3}
   water: {fileID: 4812419748601913348, guid: 8a9bf470b81c211499a89dcdcd80f1ed, type: 3}
   aheadDistance: 7
   tileWidth: 50
-  nutrientDensity: 0.05
+  partialStoneDepth: 20
+  StoneDepth: 40
+  endGameDepth: 60
+  nutrientDensity: 0.01
   waterDensity: 0.05
+  nutrientAdditionPerTile: 0.001
+  waterAdditionPerTile: -0.0005
+  currentDistance: 0
 --- !u!114 &1631829809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,6 +520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nutrientCount: 0
   waterCount: 0
+  maxWaterCount: 0
 --- !u!82 &1631829810
 AudioSource:
   m_ObjectHideFlags: 0
