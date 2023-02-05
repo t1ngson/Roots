@@ -17,4 +17,12 @@ public class PlaySceneStart : MonoBehaviour
     public void GoToShop(){
         SceneManager.LoadScene("Shop Scene");
     }
+
+    public void GoToTutorial(){
+        SceneManager.LoadScene("Tutorial Scene");
+    }
+
+    public void GoToMenu(){
+        SceneManager.LoadScene("Main Menu");
+    }
 }
