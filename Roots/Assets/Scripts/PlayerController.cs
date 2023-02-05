@@ -6,7 +6,11 @@ public class PlayerController : MonoBehaviour
 {
     private GameObject gameController;
 
+    public bool mouseControl;
+
     public float playerSpeed = 2f;
+
+    public GameObject trail;
 
     private Camera playerCamera;
 
@@ -35,7 +39,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        processMovement();
+        if (mouseControl)
+            processMouseMovement();
+        else
+            processKeyboardMovement();
 
         // Make camera follow player
         playerCamera.transform.position =
@@ -51,7 +58,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Temporary movement algorithm for testing
-    void processMovement()
+    void processKeyboardMovement()
     {
         Vector3 movement = new Vector3();
 
@@ -71,6 +78,22 @@ public class PlayerController : MonoBehaviour
         {
             movement += new Vector3(1, 0);
         }
+
+        transform.position += movement.normalized * playerSpeed * Time.deltaTime;
+
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, leftBounds, rightBounds),
+            transform.position.y,
+            0);
+    }
+
+    void processMouseMovement()
+    {
+        Vector3 mousePos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
+
+        Vector3 movement = mousePos - transform.position;
+
+        movement.z = 0f;
 
         transform.position += movement.normalized * playerSpeed * Time.deltaTime;
 
@@ -106,5 +129,10 @@ public class PlayerController : MonoBehaviour
             gameController.GetComponent<LevelController>().waterCount++;
             Destroy(other);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Instantiate(trail, transform.position, transform.rotation);
     }
 }
