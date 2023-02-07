@@ -1182,8 +1182,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318295086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.375151, y: 0.23950447, z: -2.9}
-  m_LocalScale: {x: 6, y: 6, z: 1}
+  m_LocalPosition: {x: 9.45, y: 0.64, z: -2.9}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1937643953}
@@ -1227,8 +1227,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 836175933
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 391004903adf36d45bc6f20c7f296392, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6918,12 +6918,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1780092070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8279177184c79554ba6ad672aaa97f2f, type: 3}
+  m_Script: {fileID: 11500000, guid: f1292da4e1bd4bc28b237e93ee69b55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxWaterCount: 0
-  nutrientText: {fileID: 0}
+  maxWaterCount: 20
+  timePerRun: 30
+  nutrientText: {fileID: 209976394}
   waterText: {fileID: 0}
+  timePerWaterUse: 0
 --- !u!4 &1780092072
 Transform:
   m_ObjectHideFlags: 0
@@ -6948,7 +6950,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1780092070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20b3d37f1677118458161a0ac4e58af7, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f19c7ba708976e7a841f08713ae2d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   drillUpgrade: {fileID: 160614407}
@@ -6957,7 +6959,7 @@ MonoBehaviour:
   skatesUpgrade: {fileID: 1549098287}
   waterBottleUpgrade: {fileID: 702315279}
   wateringCanUpgrade: {fileID: 780462056}
-  nutrientText: {fileID: 878497982}
+  nutrientText: {fileID: 209976394}
 --- !u!82 &1780092074
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7195,7 +7197,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1804564027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 671b956f483e5f6419ead277cfd83110, type: 3}
+  m_Script: {fileID: 11500000, guid: 53d0363c134994aec971719cb02e9c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   transition: {fileID: 389602211}
@@ -7614,8 +7616,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1883674066}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.051771, y: -199.89099, z: -6866.484}
-  m_LocalScale: {x: 100, y: 1, z: 1}
+  m_LocalPosition: {x: -6, y: -288, z: -6866.484}
+  m_LocalScale: {x: 75, y: 50, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 345631526}
@@ -7667,7 +7669,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 22.25, y: 2.4}
+  m_Size: {x: 22.5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -8718,9 +8720,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2146775812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfa531acffe592342a012e68a759afa2, type: 3}
+  m_Script: {fileID: 11500000, guid: 53d0363c134994aec971719cb02e9c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transition: {fileID: 389602211}
+  transitionTime: 1
 --- !u!114 &2146775815
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -29,6 +29,12 @@ public class PlaySceneStart : MonoBehaviour
         LoadNextScene("Main Menu");
     }
 
+    public void exitGame()
+    {
+        Application.Quit();
+        Debug.Log("Game is exiting");
+    }
+
 
     public void LoadNextScene(string sceneName)
     {
